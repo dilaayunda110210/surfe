@@ -28,21 +28,63 @@ kerjalan_tugas_berselancar() {
     local target1="visit complete"
     local target2="video viewing is complete"
     local target3="captcha failed"
-    local regex=".*\b\s*(${target1}|${target2}|${target3})\s*\b.*"
+    local target4="connection error. retry"
+    local target5="you earned"
+    
+    local target6="this site can’t be reached"
+    local target7="this site can’t provide a secure connection"
+    local target8="page can’t be found"
+    
+    local target9="open xdg-open?"
+    
+    local target10="video is loading"
+    local target11="rumble.com"
+    local target12="google.com"
+    local target13="select all"
+    
+    local target14="stay on this site"
+    local target15="watching this video for"
+
     local hasil=""
 
     echo "Kerjakan tugas ....."
 
     # Klik tugas surfe
-    xdotool mousemove --sync $KOORDINAT_TOMBOL_TUGAS click --delay 100 1
+    xdotool mousemove --sync $KOORDINAT_TOMBOL_TUGAS1 click --delay 100 1
+    xdotool mousemove --sync $KOORDINAT_TOMBOL_TUGAS2 click --delay 100 1
 
+    local index=0
     while true; do
-        hasil=$(baca_tampilan "$SCROT_KOORDINAT_KONFIRMASI,$SCROT_DIMENSI_KONFIRMASI")
-        echo $hasil
 
-        if [[ $hasil =~ $regex ]]; then
+        hasil=$(baca_tampilan "$SCROT_KOORDINAT_KONFIRMASI,$SCROT_DIMENSI_KONFIRMASI")
+        # echo $hasil
+
+        if [[ $hasil =~ $target1|$target2|$target3|$target4|$target5 ]]; then
             break
+        elif [[ $hasil =~ $$target6|$target7|$target8 ]]; then
+            kerjakan_umpan_balik 4
+            break
+        elif [[ $hasil =~ $target9 ]]; then
+            xdotool key "Return"
+            continue
+        # cek kondisi jika video rumble bermasalah
+        elif [[ $hasil =~ $target10.*$target11 ]]; then
+            index=$((index + 1))
+            if [ $index -gt 5 ]; then
+                kerjakan_umpan_balik 1
+                break
+            fi 
+            continue
+        # cek kondisi jika captcha youtube bermasalah
+        elif [[ ($hasil =~ $target10|$target12) && !($hasil =~ $target13) ]]; then
+            index=$((index + 1))
+            if [ $index -gt 5 ]; then
+                kerjakan_hapus_history
+                break
+            fi 
+            continue
         fi
+
         sleep 5  # Tunggu 5 detik sebelum membaca lagi
     done
 
@@ -50,6 +92,55 @@ kerjalan_tugas_berselancar() {
     xdotool mousemove --sync $KOORDINAT_TUTUP_TAB click --delay 100 1
 }
 
+# Fungsi untuk  mengerjakan tugas hapus history
+kerjakan_hapus_history() {
+    xdotool mousemove --sync $KOORDINAT_HISTORY click --delay 100 1
+    sleep 3
+    xdotool key "Tab"
+    sleep 3 
+    xdotool key "Return"
+    sleep 6 
+}
+
+# Fungsi untuk  mengerjakan tugas umpan balik
+kerjakan_umpan_balik() {
+    xdotool mousemove --sync $KOORDINAT_TUTUP_TAB click --delay 100 1
+
+    # Buka extensi surfe.be
+    buka_extensi_surfe
+    sleep 3
+
+    # Klik tombol dislake
+    xdotool mousemove --sync $KOORDINAT_TOMBOL_DISLAKE click --delay 100 1
+    sleep 4
+
+    case $1 in
+        1)
+            xdotool mousemove --sync $KOORDINAT_UPAN_BALIK1 click --delay 100 1
+            ;;
+        2)
+            xdotool mousemove --sync $KOORDINAT_UPAN_BALIK2 click --delay 100 1
+            ;;
+        3)
+            xdotool mousemove --sync $KOORDINAT_UPAN_BALIK3 click --delay 100 1
+            ;;
+        4)
+            xdotool mousemove --sync $KOORDINAT_UPAN_BALIK4 click --delay 100 1
+            ;;
+        5)
+            xdotool mousemove --sync $KOORDINAT_UPAN_BALIK5 click --delay 100 1
+            ;;
+        *)
+            xdotool mousemove --sync $KOORDINAT_UPAN_BALIK1 click --delay 100 1
+            ;;
+    esac
+
+    sleep 3
+    xdotool key --delay 100 "Return"
+    sleep 3
+}
+
+# Fungsi untuk memeriksa mengerjakan tugas captcha
 kerjalan_tugas_captcha() {
     local regex=".*\b\s*this window can be closed\s*\b.*"
 
@@ -60,7 +151,6 @@ kerjalan_tugas_captcha() {
 
     while true; do
         hasil=$(baca_tampilan "$SCROT_KOORDINAT_CAPTCHA,$SCROT_DIMENSI_CAPTCHA")
-        echo $hasil
 
         if [[ $hasil =~ $regex ]]; then
             break
@@ -92,8 +182,6 @@ cek_ketersediaan_tugas() {
         return 3
     fi
 }
-
-cek_ketersediaan_tugas
 
 # Function untuk menjalankan tugas
 jalankan_tugas() {
