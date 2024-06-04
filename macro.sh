@@ -26,7 +26,7 @@ baca_tampilan() {
 # Fungsi untuk mengerjalan tugas berselancar
 kerjalan_tugas_berselancar() {
 
-    local website_block="neoinf.online"
+    local website_block="neoinf.online|3lakk.online"
 
     local target1="visit complete"
     local target2="video viewing is complete"
