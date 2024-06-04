@@ -25,6 +25,9 @@ baca_tampilan() {
 
 # Fungsi untuk mengerjalan tugas berselancar
 kerjalan_tugas_berselancar() {
+
+    local website_block="neoinf.online"
+
     local target1="visit complete"
     local target2="video viewing is complete"
     local target3="captcha failed"
@@ -58,10 +61,12 @@ kerjalan_tugas_berselancar() {
 
         hasil=$(baca_tampilan "$SCROT_KOORDINAT_KONFIRMASI,$SCROT_DIMENSI_KONFIRMASI")
         # echo $hasil
-
-        if [[ $hasil =~ $target1|$target2|$target3|$target4|$target5 ]]; then
+        if [[ $hasil =~ $website_block ]]; then
+            kerjakan_umpan_balik 4
             break
-        elif [[ $hasil =~ $$target6|$target7|$target8 ]]; then
+        elif [[ $hasil =~ $target1|$target2|$target3|$target4|$target5 ]]; then
+            break
+        elif [[ $hasil =~ $target6|$target7|$target8 ]]; then
             kerjakan_umpan_balik 4
             break
         elif [[ $hasil =~ $target9 ]]; then
