@@ -48,6 +48,9 @@ kerjalan_tugas_berselancar() {
     local target14="stay on this site"
     local target15="watching this video for"
 
+    local target16="youtube.com"
+    local target17="oops! =0"
+
     local hasil=""
 
     echo "Kerjakan tugas ....."
@@ -76,6 +79,13 @@ kerjalan_tugas_berselancar() {
         elif [[ $hasil =~ $target10.*$target11 ]]; then
             index=$((index + 1))
             if [ $index -gt 5 ]; then
+                kerjakan_umpan_balik 1
+                break
+            fi 
+            continue
+        elif [[ $hasil =~ $target16.*$target17 ]]; then
+            index=$((index + 1))
+            if [ $index -gt 8 ]; then
                 kerjakan_umpan_balik 1
                 break
             fi 
