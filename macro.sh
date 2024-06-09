@@ -76,7 +76,7 @@ kerjalan_tugas_berselancar() {
             xdotool key "Return"
             continue
         # cek kondisi jika video rumble bermasalah
-        elif [[ $hasil =~ $target10.*$target11 ]]; then
+        elif [[ $hasil =~ $target11.*$target10 ]]; then
             index=$((index + 1))
             if [ $index -gt 5 ]; then
                 kerjakan_umpan_balik 1
@@ -91,7 +91,7 @@ kerjalan_tugas_berselancar() {
             fi 
             continue
         # cek kondisi jika captcha youtube bermasalah
-        elif [[ ($hasil =~ $target10.*$target12) && !($hasil =~ $target13) ]]; then
+        elif [[ ($hasil =~ $target12.*$target10) && !($hasil =~ $target13) ]]; then
             index=$((index + 1))
             if [ $index -gt 5 ]; then
                 kerjakan_hapus_history
