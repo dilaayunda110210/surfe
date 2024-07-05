@@ -8,5 +8,5 @@ yad --form \
     --field="!screen-shared-symbolic":BTN "./macro.sh" \
     --field="!edit-clear-rtl-symbolic":BTN "sudo pkill -f macro.sh" \
     --field="!rotation-allowed-symbolic":BTN "./refresh.sh" \
-    --field="!media-playback-start-symbolic":BTN "xdotool windowactivate $CHROMIUM_ID key alt+shift+s" \
+    --field="!media-playback-start-symbolic":BTN "cd /config/surfe && git pull" \
     --no-buttons
