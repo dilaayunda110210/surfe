@@ -88,7 +88,7 @@ kerjalan_tugas_berselancar() {
             fi 
             continue
         # video ruble pause
-        elif [[ $hasil =~ $target11.*$target18 ]] || [[ $hasil =~ $target19|$target20 ]]; then
+        elif [[ $hasil =~ $target11.*$target18 ]] || [[ $hasil =~ $target19.*$target20 ]]; then
             index=$((index + 1))
             if [ $index -le 1 ]; then
                 sleep 3 
