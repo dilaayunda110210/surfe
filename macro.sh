@@ -51,6 +51,8 @@ kerjalan_tugas_berselancar() {
     local target16="youtube.com"
     local target17="oops! =0"
 
+    local target18="video paused"
+
     local hasil=""
 
     echo "Kerjakan tugas ....."
@@ -81,6 +83,14 @@ kerjalan_tugas_berselancar() {
             if [ $index -gt 5 ]; then
                 kerjakan_umpan_balik 1
                 break
+            fi 
+            continue
+        # video ruble pause
+        elif [[ $hasil =~ $target11.*$target18 ]]; then
+            index=$((index + 1))
+            if [ $index -gt 2 ]; then
+                xdotool mousemove 272 286 click 1
+                sleep 5
             fi 
             continue
         elif [[ $hasil =~ $target16.*$target17 ]]; then
