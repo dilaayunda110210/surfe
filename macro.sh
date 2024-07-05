@@ -87,7 +87,7 @@ kerjalan_tugas_berselancar() {
             fi 
             continue
         # video ruble pause
-        elif [[ $hasil =~ $target11.*$target18 ]] || [[ $hasil = $target19 ]]; then
+        elif [[ $hasil =~ $target11.*$target18 ]] || [[ $hasil =~ $target19 ]]; then
             xdotool mousemove 272 286 click 1
             sleep 5    
             continue
