@@ -52,8 +52,7 @@ kerjalan_tugas_berselancar() {
     local target17="oops! =0"
 
     local target18="video paused"
-    local target19="surfe.be/video"
-    local target20="sec"
+    local target19="surfe.be/vi"
 
     local hasil=""
 
@@ -87,8 +86,8 @@ kerjalan_tugas_berselancar() {
                 break
             fi 
             continue
-        # video ruble pause
-        elif [[ $hasil =~ $target11.*$target18 ]] || [[ $hasil =~ $target19.*$target20 ]]; then
+        # video pause
+        elif [[ $hasil =~ $target11.*$target18 ]] || [[ $hasil =~ $target19 ]]; then
             index=$((index + 1))
             if [ $index -le 1 ]; then
                 sleep 3 
